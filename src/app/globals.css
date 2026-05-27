@@ -166,43 +166,49 @@ h1, h2, h3, h4, h5, h6 {
 /* 기본 숨김 상태 */
 .reveal-up {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity var(--dur-slower) var(--ease-smooth), transform var(--dur-slower) var(--ease-smooth);
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
 }
 
 .reveal-fade {
   opacity: 0;
-  transition: opacity var(--dur-slower) var(--ease-smooth);
+  transition: opacity 0.8s var(--ease-smooth);
 }
 
 .reveal-scale {
   opacity: 0;
-  transform: scale(0.95);
-  transition: opacity var(--dur-slower) var(--ease-smooth), transform var(--dur-slower) var(--ease-smooth);
+  transform: scale(0.97);
+  transition: opacity 1.2s var(--ease-smooth), transform 1.2s var(--ease-smooth);
 }
 
 /* 나타난 상태 */
-.is-revealed .reveal-up {
+.is-revealed .reveal-up,
+.is-revealed.reveal-up {
   opacity: 1;
   transform: translateY(0);
 }
 
-.is-revealed .reveal-fade {
+.is-revealed .reveal-fade,
+.is-revealed.reveal-fade {
   opacity: 1;
 }
 
-.is-revealed .reveal-scale {
+.is-revealed .reveal-scale,
+.is-revealed.reveal-scale {
   opacity: 1;
   transform: scale(1);
 }
 
-/* Stagger 딜레이 (부모에 is-revealed가 붙을 때 자식들이 순차적으로 나타남) */
+/* Stagger 딜레이 */
 .reveal-stagger-0 { transition-delay: 0ms !important; }
 .reveal-stagger-1 { transition-delay: 100ms !important; }
 .reveal-stagger-2 { transition-delay: 200ms !important; }
 .reveal-stagger-3 { transition-delay: 300ms !important; }
 .reveal-stagger-4 { transition-delay: 400ms !important; }
 .reveal-stagger-5 { transition-delay: 500ms !important; }
+.reveal-stagger-6 { transition-delay: 600ms !important; }
+.reveal-stagger-7 { transition-delay: 700ms !important; }
+.reveal-stagger-8 { transition-delay: 800ms !important; }
 
 /* prefers-reduced-motion 대응 */
 @media (prefers-reduced-motion: reduce) {

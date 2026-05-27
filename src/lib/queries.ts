@@ -186,15 +186,15 @@ export function getGalleryPosts(type?: 'photo' | 'video', page = 1, pageSize = 1
   const params: any[] = [];
   
   if (type) {
-    whereClause += " AND type = ?";
+    whereClause += " AND gp.type = ?";
     params.push(type);
   }
   
   if (!includeHidden) {
-    whereClause += " AND status = 'public'";
+    whereClause += " AND gp.status = 'public'";
   }
 
-  const countRow = db.prepare(`SELECT COUNT(*) as total FROM gallery_posts ${whereClause}`).get(...params) as { total: number };
+  const countRow = db.prepare(`SELECT COUNT(*) as total FROM gallery_posts gp ${whereClause}`).get(...params) as { total: number };
   const total = countRow.total;
   const totalPages = Math.ceil(total / pageSize);
   const offset = (page - 1) * pageSize;

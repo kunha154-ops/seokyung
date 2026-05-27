@@ -104,6 +104,55 @@ export default function RegisterPage() {
             />
           </div>
 
+          {/* 이메일 */}
+          <div className={styles.fieldGroup}>
+            <label className={styles.label} htmlFor="reg-email">이메일</label>
+            <input
+              id="reg-email"
+              name="email"
+              type="email"
+              className={styles.input}
+              placeholder="example@email.com (선택)"
+              autoComplete="email"
+            />
+          </div>
+
+          {/* 소속 교회 */}
+          <div className={styles.fieldGroup}>
+            <label className={styles.label} htmlFor="reg-church">소속 교회</label>
+            <input
+              id="reg-church"
+              name="church"
+              type="text"
+              className={styles.input}
+              placeholder="예: 서경교회 (선택)"
+            />
+          </div>
+
+          {/* 직분 */}
+          <div className={styles.fieldGroup}>
+            <label className={styles.label} htmlFor="reg-position">직분</label>
+            <input
+              id="reg-position"
+              name="position"
+              type="text"
+              className={styles.input}
+              placeholder="예: 목사, 장로, 집사 (선택)"
+            />
+          </div>
+
+          {/* 연락처 */}
+          <div className={styles.fieldGroup}>
+            <label className={styles.label} htmlFor="reg-phone">연락처</label>
+            <input
+              id="reg-phone"
+              name="phone"
+              type="text"
+              className={styles.input}
+              placeholder="예: 010-1234-5678 (선택)"
+            />
+          </div>
+
           {/* 아이디 + 중복확인 */}
           <div className={styles.fieldGroup}>
             <label className={styles.label} htmlFor="reg-username">아이디</label>

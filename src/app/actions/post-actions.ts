@@ -18,6 +18,7 @@ interface AuthUser {
   id: number;
   name: string;
   role: string;
+  status?: string;
   isAdmin: boolean;
 }
 
@@ -30,6 +31,7 @@ async function getCurrentUser(): Promise<AuthUser | null> {
         id: parseInt(session.user.id as string, 10),
         name: session.user.name || '회원',
         role: (session.user as any).role || 'member',
+        status: (session.user as any).status || 'pending',
         isAdmin: (session.user as any).role === 'admin',
       };
     }
@@ -47,6 +49,7 @@ async function getCurrentUser(): Promise<AuthUser | null> {
       id: 0, // system admin
       name: '관리자',
       role: 'admin',
+      status: 'approved',
       isAdmin: true,
     };
   }
@@ -84,6 +87,10 @@ export async function submitPost(formData: FormData): Promise<{ success: boolean
   const user = await getCurrentUser();
   if (!user) {
     return { success: false, error: '로그인이 필요합니다.' };
+  }
+
+  if (!user.isAdmin && user.status !== 'approved') {
+    return { success: false, error: '관리자 승인 후 이용할 수 있습니다.' };
   }
 
   const id = formData.get('id')?.toString();

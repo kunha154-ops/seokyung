@@ -30,11 +30,11 @@ interface PageProps {
 }
 
 import { cookies } from "next/headers";
+import { getCurrentUser } from "@/app/actions/post-actions";
 
 export default async function ResourcesCategoryPage({ params, searchParams }: PageProps) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('admin_token')?.value;
-  const isLoggedIn = !!token;
+  const user = await getCurrentUser();
+  const canWrite = user?.isAdmin || user?.status === 'approved';
 
   const p = await params;
   const sp = await searchParams;
@@ -69,7 +69,7 @@ export default async function ResourcesCategoryPage({ params, searchParams }: Pa
       <div className={styles.wrap}>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1.5rem', justifyContent: 'space-between' }}>
           <SearchBar basePath={`/resources/${categoryId}`} placeholder="제목 또는 파일명으로 검색" />
-          {isLoggedIn && (
+          {canWrite && (
             <Link 
               href={`/resources/${categoryId}/write`} 
               style={{ 

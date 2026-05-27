@@ -111,6 +111,10 @@ function initializeSchema(db: Database.Database) {
       password_hash TEXT NOT NULL,
       name TEXT NOT NULL,
       email TEXT,
+      church TEXT,
+      position TEXT,
+      phone TEXT,
+      status TEXT DEFAULT 'pending',
       role TEXT DEFAULT 'member',
       failed_attempts INTEGER DEFAULT 0,
       locked_until TEXT,
@@ -126,6 +130,18 @@ function initializeSchema(db: Database.Database) {
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     );
   `);
+
+  // Migration for existing databases
+  try {
+    db.prepare("ALTER TABLE users ADD COLUMN church TEXT").run();
+    db.prepare("ALTER TABLE users ADD COLUMN position TEXT").run();
+    db.prepare("ALTER TABLE users ADD COLUMN phone TEXT").run();
+    db.prepare("ALTER TABLE users ADD COLUMN status TEXT DEFAULT 'pending'").run();
+    // 기존 가입자는 불편함이 없도록 자동 승인 처리
+    db.prepare("UPDATE users SET status = 'approved'").run();
+  } catch (e) {
+    // Columns already exist
+  }
 
   // Seed with sample data if tables are empty
   const count = db.prepare('SELECT COUNT(*) as count FROM notices').get() as { count: number };

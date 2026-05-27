@@ -83,6 +83,7 @@ export default function HeroSlider() {
             priority={i === 0}
             sizes="100vw"
             quality={100}
+            unoptimized={true}
             className={styles.bgImage}
             style={{ objectPosition: s.objectPosition }}
           />

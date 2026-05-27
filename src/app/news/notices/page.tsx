@@ -16,12 +16,11 @@ interface PageProps {
 export const metadata = { title: "공지사항" };
 export const dynamic = 'force-dynamic';
 
-import { cookies } from "next/headers";
+import { getCurrentUser } from "@/app/actions/post-actions";
 
 export default async function NoticesPage({ searchParams }: PageProps) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('admin_token')?.value;
-  const isLoggedIn = !!token;
+  const user = await getCurrentUser();
+  const canWrite = user?.isAdmin || user?.status === 'approved';
 
   const params = await searchParams;
   const page = Number(params.page) || 1;
@@ -46,7 +45,7 @@ export default async function NoticesPage({ searchParams }: PageProps) {
         {/* Header Actions */}
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1.5rem', justifyContent: 'space-between' }}>
           <SearchBar basePath="/news/notices" placeholder="제목 또는 본문으로 검색" />
-          {isLoggedIn && (
+          {canWrite && (
             <Link 
               href="/news/notices/write" 
               style={{ 

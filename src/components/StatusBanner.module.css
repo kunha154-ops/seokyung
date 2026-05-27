@@ -1,0 +1,21 @@
+.banner {
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  text-align: center;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  z-index: 1000;
+  position: relative;
+}
+
+.pending {
+  background-color: #fff3cd;
+  color: #856404;
+  border-bottom: 1px solid #ffeeba;
+}
+
+.suspended {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-bottom: 1px solid #f5c6cb;
+}

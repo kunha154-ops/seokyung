@@ -22,11 +22,11 @@
   object-fit: cover;
   object-position: center center;
   transform: scale(1);
-  animation: kenBurns 12s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: heroImageReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-@keyframes kenBurns {
-  from { transform: scale(1.06); }
+@keyframes heroImageReveal {
+  from { transform: scale(1.03); }
   to { transform: scale(1); }
 }
 

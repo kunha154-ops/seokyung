@@ -12,16 +12,15 @@ const NEWS_MENU = [
 export const metadata = { title: "노회 소식" };
 export const dynamic = 'force-dynamic';
 
-import { cookies } from "next/headers";
+import { getCurrentUser } from "@/app/actions/post-actions";
 
 interface PageProps {
   searchParams: Promise<{ page?: string; search?: string }>;
 }
 
 export default async function UpdatesPage({ searchParams }: PageProps) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('admin_token')?.value;
-  const isLoggedIn = !!token;
+  const user = await getCurrentUser();
+  const canWrite = user?.isAdmin || user?.status === 'approved';
 
   const params = await searchParams;
   const page = Number(params.page) || 1;
@@ -45,7 +44,7 @@ export default async function UpdatesPage({ searchParams }: PageProps) {
       <div className={styles.listWrap}>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1.5rem', justifyContent: 'space-between' }}>
           <SearchBar basePath="/news/updates" placeholder="제목 또는 본문으로 검색" />
-          {isLoggedIn && (
+          {canWrite && (
             <Link 
               href="/news/updates/write" 
               style={{ 

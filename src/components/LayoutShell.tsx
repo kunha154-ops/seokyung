@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import StatusBanner from "@/components/StatusBanner";
 
 import { SessionProvider } from "next-auth/react";
 
@@ -20,6 +21,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
       <a href="#main-content" className="skip-link">
         본문으로 바로가기
       </a>
+      <StatusBanner />
       <Header />
       <main id="main-content">{children}</main>
       <Footer />

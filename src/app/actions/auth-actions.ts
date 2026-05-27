@@ -41,10 +41,14 @@ export async function registerUser(formData: FormData) {
   const password = formData.get("password") as string;
   const passwordConfirm = formData.get("passwordConfirm") as string;
   const name = (formData.get("name") as string)?.trim();
+  const email = (formData.get("email") as string)?.trim() || null;
+  const church = (formData.get("church") as string)?.trim() || null;
+  const position = (formData.get("position") as string)?.trim() || null;
+  const phone = (formData.get("phone") as string)?.trim() || null;
 
   // Required fields
   if (!username || !password || !passwordConfirm || !name) {
-    return { error: "모든 필드를 입력해주세요." };
+    return { error: "모든 필수 필드를 입력해주세요." };
   }
 
   // Name validation
@@ -80,11 +84,11 @@ export async function registerUser(formData: FormData) {
   // Hash password with high salt rounds
   const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
-  // Insert user
+  // Insert user (default status is pending from schema)
   try {
     db.prepare(
-      "INSERT INTO users (username, password_hash, name) VALUES (?, ?, ?)"
-    ).run(username, passwordHash, name);
+      "INSERT INTO users (username, password_hash, name, email, church, position, phone, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')"
+    ).run(username, passwordHash, name, email, church, position, phone);
 
     return { success: true };
   } catch (err) {

@@ -3,6 +3,7 @@ import SubPageLayout from "@/components/SubPageLayout";
 import SearchBar from "@/components/common/SearchBar";
 import { getResources } from "@/lib/queries";
 import { cookies } from "next/headers";
+import { getCurrentUser } from "@/app/actions/post-actions";
 import styles from "../Mission.module.css";
 
 export const dynamic = 'force-dynamic';
@@ -27,9 +28,8 @@ interface PageProps {
 }
 
 export default async function MissionCategoryPage({ params, searchParams }: PageProps) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('admin_token')?.value;
-  const isLoggedIn = !!token;
+  const user = await getCurrentUser();
+  const canWrite = user?.isAdmin || user?.status === 'approved';
 
   const p = await params;
   const sp = await searchParams;
@@ -66,7 +66,7 @@ export default async function MissionCategoryPage({ params, searchParams }: Page
       <div className={styles.container}>
         <div className={styles.header}>
           <SearchBar basePath={`/mission/${categoryId}`} placeholder="제목 또는 내용으로 검색" />
-          {isLoggedIn && (
+          {canWrite && (
             <Link href={`/mission/${categoryId}/write`} className={styles.writeBtn}>
               + 글쓰기
             </Link>

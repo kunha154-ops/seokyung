@@ -16,7 +16,7 @@ export function useScrollReveal(options: ScrollRevealOptions = {}) {
       return;
     }
 
-    const { once = true, root = null, rootMargin = '0px 0px -100px 0px', threshold = 0.15 } = options;
+    const { once = true, root = null, rootMargin = '0px 0px -100px 0px', threshold = 0.2 } = options;
     const element = ref.current;
 
     if (!element) return;
