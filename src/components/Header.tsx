@@ -56,7 +56,7 @@ const NAV_ITEMS = [
       { label: "임원회의록", href: "/resources/minutes-executive" },
       { label: "재판국자료", href: "/resources/court" },
       { label: "공문수발", href: "/resources/official-documents" },
-      { label: "스켄자료", href: "/resources/scans" },
+      { label: "스캔자료", href: "/resources/scans" },
     ],
   },
   {

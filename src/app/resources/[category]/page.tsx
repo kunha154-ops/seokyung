@@ -15,7 +15,7 @@ const CATEGORIES = [
   { id: "minutes-executive", label: "임원회의록" },
   { id: "court", label: "재판국자료" },
   { id: "official-documents", label: "공문수발" },
-  { id: "scans", label: "스켄자료" },
+  { id: "scans", label: "스캔자료" },
 ];
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
