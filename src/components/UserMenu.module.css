@@ -11,7 +11,7 @@
 
 .loginLink {
   font-size: 0.85rem;
-  color: var(--color-primary);
+  color: #ffffff;
   font-weight: var(--fw-semibold);
   transition: color 0.2s var(--ease);
 }
@@ -22,12 +22,12 @@
 
 .authDivider {
   font-size: 0.85rem;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .registerLink {
   font-size: 0.85rem;
-  color: var(--color-text-secondary);
+  color: rgba(255, 255, 255, 0.8);
   font-weight: var(--fw-medium);
   transition: color 0.2s var(--ease);
 }
@@ -38,7 +38,7 @@
 
 .userButton {
   font-size: 0.95rem;
-  color: var(--color-primary);
+  color: #ffffff;
   font-weight: var(--fw-semibold);
   background: none;
   padding: 6px 10px;
