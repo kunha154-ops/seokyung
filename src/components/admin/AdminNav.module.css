@@ -1,0 +1,106 @@
+.adminNav {
+  background: var(--color-primary);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.navContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.logo a {
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.menuList {
+  display: flex;
+  gap: 0.5rem;
+  height: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.menuList::-webkit-scrollbar {
+  display: none;
+}
+
+.menuItem {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+}
+
+.menuItem:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.menuItem.active {
+  color: white;
+  border-bottom-color: var(--color-teal);
+  font-weight: 700;
+}
+
+.logoutBtn a {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.logoutBtn a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-color: white;
+}
+
+@media (max-width: 768px) {
+  .navContainer {
+    flex-wrap: wrap;
+    height: auto;
+    padding-top: 1rem;
+  }
+  
+  .logo {
+    width: 50%;
+  }
+  
+  .logoutBtn {
+    width: 50%;
+    text-align: right;
+  }
+  
+  .menuList {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding-bottom: 0;
+  }
+  
+  .menuItem {
+    padding: 0.75rem 0.75rem;
+  }
+}

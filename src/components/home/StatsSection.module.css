@@ -1,0 +1,163 @@
+.statusSection {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(201, 167, 106, 0.10), transparent 34%),
+    linear-gradient(180deg, #08283d 0%, #061f31 100%);
+  color: #fff;
+  padding: 220px 24px 140px;
+}
+
+.statusSection::before {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  right: -180px;
+  top: -120px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+}
+
+.statusInner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.statusHeader {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.statusLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 167, 106, 0.48);
+  background: rgba(255, 255, 255, 0.04);
+  color: #c9a76a;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.statusHeader h2 {
+  margin: 18px 0 0;
+  font-size: clamp(30px, 3.4vw, 46px);
+  line-height: 1.22;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  color: #ffffff;
+}
+
+.statusHeader h2 span {
+  color: #c9a76a;
+}
+
+.statusHeader p {
+  margin: 18px auto 0;
+  max-width: 560px;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 16px;
+  line-height: 1.7;
+  letter-spacing: -0.02em;
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(8px);
+}
+
+.statusItem {
+  position: relative;
+  text-align: center;
+  padding: 46px 24px 42px;
+}
+
+.statusItem:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  right: 0;
+  bottom: 28px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.statusNumber {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.statusNumber strong {
+  font-size: clamp(52px, 6vw, 78px);
+  line-height: 0.95;
+  font-weight: 750;
+  letter-spacing: -0.055em;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.statusNumber span {
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.statusItem p {
+  margin: 18px 0 0;
+  color: rgba(255, 255, 255, 0.70);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+@media (max-width: 900px) {
+  .statusGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .statusItem:nth-child(2)::after {
+    display: none;
+  }
+
+  .statusItem:nth-child(1),
+  .statusItem:nth-child(2) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media (max-width: 560px) {
+  .statusSection {
+    padding: 112px 20px 88px;
+  }
+
+  .statusGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statusItem {
+    padding: 36px 20px;
+  }
+
+  .statusItem::after {
+    display: none;
+  }
+
+  .statusItem:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}

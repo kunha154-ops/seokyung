@@ -1,0 +1,286 @@
+.article {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.tree {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  padding-bottom: 2rem;
+}
+
+.treeUl {
+  display: flex;
+  padding-top: 20px;
+  position: relative;
+  transition: all 0.5s;
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+/* Connect elements with horizontal lines */
+.treeUl::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 2px solid var(--color-border);
+  width: 0;
+  height: 20px;
+}
+
+/* First UL doesn't need the top connector */
+.tree > .treeUl::before {
+  display: none;
+}
+.tree > .treeUl {
+  padding-top: 0;
+}
+
+.treeLi {
+  float: left;
+  text-align: center;
+  list-style-type: none;
+  position: relative;
+  padding: 20px 10px 0 10px;
+  transition: all 0.5s;
+}
+
+/* Horizontal connectors between siblings */
+.treeLi::before, .treeLi::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 50%;
+  border-top: 2px solid var(--color-border);
+  width: 50%;
+  height: 20px;
+}
+.treeLi::after {
+  right: auto;
+  left: 50%;
+  border-left: 2px solid var(--color-border);
+}
+
+/* Only single children don't need horizontal connectors */
+.treeLi:only-child::after, .treeLi:only-child::before {
+  display: none;
+}
+
+/* Single children need a straight vertical line */
+.treeLi:only-child {
+  padding-top: 0;
+}
+
+/* Remove left connector from first child and right from last */
+.treeLi:first-child::before, .treeLi:last-child::after {
+  border: 0 none;
+}
+/* Connect first and last child vertically to parent */
+.treeLi:first-child::after {
+  border-radius: 8px 0 0 0;
+}
+.treeLi:last-child::before {
+  border-right: 2px solid var(--color-border);
+  border-radius: 0 8px 0 0;
+}
+
+/* Add vertical line down from parent to children */
+.treeUl ul::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 2px solid var(--color-border);
+  width: 0;
+  height: 20px;
+  margin-left: -1px; /* Center alignment */
+}
+
+/* Node styles */
+.node {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 1px solid var(--color-border-light);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-width: 140px;
+  z-index: 2;
+}
+
+.node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.rootNode {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 1.25rem 2.5rem;
+  border-radius: var(--radius-lg);
+}
+
+.rootNode .nodeTitle {
+  color: white !important;
+}
+
+.nodeTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.nodeDesc {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin: 0.25rem 0 0 0;
+}
+
+.branchLabel {
+  background: var(--color-background-alt);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Executive Node (side branch logic) */
+.executiveLi {
+  position: absolute;
+  left: 50%;
+  top: 55px; /* Centered perfectly on the 110px vertical stem */
+  transform: translate(-100%, -50%);
+  margin-left: -30px; /* Space between node and vertical stem */
+  padding: 0;
+  z-index: 10;
+}
+
+.executiveLi::before, .executiveLi::after {
+  display: none !important; /* Disconnect from standard sibling horizontal line */
+}
+
+/* We create a custom horizontal line connecting the root stem to executive */
+.topLevelUl {
+  position: relative;
+  padding-top: 110px !important; /* Increased to 110px to prevent any vertical overlap */
+}
+
+.topLevelUl::before {
+  height: 110px !important; /* Match the longer stem height */
+}
+
+.executiveNode {
+  background: var(--color-teal);
+  color: white;
+  border: none;
+  min-width: 150px;
+}
+
+.executiveNode .nodeTitle {
+  color: white !important;
+}
+
+.executiveNode::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -30px; /* Connects exactly to the center vertical line */
+  width: 30px;
+  height: 2px;
+  background: var(--color-border);
+  z-index: -1;
+}
+
+/* List Cards */
+.listCard {
+  background: white;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  width: 240px;
+  margin: 0 auto;
+}
+
+.listCard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.listCard li {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  padding: 0.5rem;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  transition: background 0.2s;
+}
+
+.listCard li:hover {
+  background: var(--color-border-light);
+}
+
+@media (max-width: 900px) {
+  .treeUl {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .treeLi {
+    padding: 20px 0 0 0;
+    width: 100%;
+  }
+  
+  /* Hide horizontal connections in mobile */
+  .treeLi::before, .treeLi::after {
+    display: none;
+  }
+  
+  /* Replace with vertical connections */
+  .treeLi {
+    position: relative;
+  }
+  
+  .treeLi:not(:first-child)::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 20px;
+    background: var(--color-border);
+    margin-left: -1px;
+  }
+  
+  .executiveLi {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-bottom: 2rem;
+  }
+  
+  .executiveNode {
+    transform: none;
+  }
+  
+  .executiveNode::after {
+    display: none;
+  }
+}
+

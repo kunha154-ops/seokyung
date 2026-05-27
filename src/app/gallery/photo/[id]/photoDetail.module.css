@@ -1,0 +1,92 @@
+.photoDetailPage {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.photoDetailHeader {
+  margin-bottom: 36px;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 24px;
+}
+
+.photoDetailHeader h1 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.3;
+  color: #0f2d44;
+}
+
+.photoDetailMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 14px;
+  font-size: 15px;
+  color: #6b7280;
+}
+
+.photoDetailMeta span strong {
+  font-weight: 600;
+  color: #374151;
+}
+
+.photoDetailDescription {
+  margin-top: 24px;
+  font-size: 17px;
+  line-height: 1.8;
+  color: #374151;
+  white-space: pre-wrap;
+}
+
+.photoDetailGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 40px;
+}
+
+.photoDetailItem {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  border-radius: 16px;
+  background: #f4f1ec;
+  display: block;
+}
+
+.photoDetailImage {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.photoDetailItem:hover .photoDetailImage {
+  transform: scale(1.05);
+}
+
+.footerActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 48px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .photoDetailHeader h1 {
+    font-size: 26px;
+  }
+
+  .photoDetailGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .photoDetailGrid {
+    grid-template-columns: 1fr;
+  }
+}

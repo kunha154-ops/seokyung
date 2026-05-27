@@ -1,0 +1,214 @@
+/* ===== DESIGN SYSTEM v3: 서경노회 — GCF-faithful ===== */
+
+:root {
+  /* Colors */
+  --color-primary: #0C2D48;
+  --color-primary-light: #1A4A6E;
+  --color-primary-dark: #061C2B;
+  --color-coral: #D4644A;
+  --color-coral-light: #E07D65;
+  --color-teal: #1D7A6A;
+  --color-teal-light: #28A08C;
+  --color-mint: #BFE0D6;
+  --color-mint-light: #E2F0EB;
+  --color-cream: #F5EDE0;
+  --color-sand: #E8DFD0;
+  --color-bg: #FAFAF8;
+  --color-surface: #FFFFFF;
+  --color-text: #1A1A1A;
+  --color-text-secondary: #555555;
+  --color-text-muted: #8E8E8E;
+  --color-border: #D9D4CC;
+  --color-border-light: #EDEBE7;
+
+  /* Typography */
+  --font-body: 'Pretendard Variable', Pretendard, 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 1rem;
+  --fs-md: 1.0625rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 2rem;
+  --fs-4xl: 2.5rem;
+  --fs-5xl: 3rem;
+  --lh-tight: 1.25;
+  --lh-snug: 1.4;
+  --lh-normal: 1.6;
+  --lh-relaxed: 1.8;
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* Spacing */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.25rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-20: 5rem;
+  --sp-24: 6rem;
+  --sp-32: 8rem;
+
+  /* Layout */
+  --max-w: 1140px;
+  --header-h: 110px;
+  --radius: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.07);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.09);
+
+  /* Transitions & Easing */
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 280ms;
+  --dur-slow: 450ms;
+  --dur-slower: 800ms;
+}
+
+/* --- Reset --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
+  text-rendering: optimizeLegibility;
+}
+
+img, video { max-width: 100%; height: auto; display: block; }
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+a:hover { color: var(--color-teal); }
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+ul, ol { list-style: none; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+}
+
+/* --- Responsive typography --- */
+@media (max-width: 768px) {
+  :root {
+    --fs-4xl: 2rem;
+    --fs-3xl: 1.75rem;
+    --fs-2xl: 1.5rem;
+    --header-h: 80px;
+    --sp-24: 4rem;
+    --sp-20: 3.5rem;
+    --sp-16: 3rem;
+  }
+}
+
+/* --- Skip link --- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--sp-4);
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--color-primary);
+  color: #fff;
+  z-index: 10000;
+  border-radius: 0 0 var(--radius) var(--radius);
+  font-size: var(--fs-sm);
+}
+.skip-link:focus { top: 0; color: #fff; }
+
+/* ==========================================================================
+   Scroll Reveal Animation Utilities
+   ========================================================================== */
+
+/* 기본 숨김 상태 */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity var(--dur-slower) var(--ease-smooth), transform var(--dur-slower) var(--ease-smooth);
+}
+
+.reveal-fade {
+  opacity: 0;
+  transition: opacity var(--dur-slower) var(--ease-smooth);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity var(--dur-slower) var(--ease-smooth), transform var(--dur-slower) var(--ease-smooth);
+}
+
+/* 나타난 상태 */
+.is-revealed .reveal-up {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.is-revealed .reveal-fade {
+  opacity: 1;
+}
+
+.is-revealed .reveal-scale {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger 딜레이 (부모에 is-revealed가 붙을 때 자식들이 순차적으로 나타남) */
+.reveal-stagger-0 { transition-delay: 0ms !important; }
+.reveal-stagger-1 { transition-delay: 100ms !important; }
+.reveal-stagger-2 { transition-delay: 200ms !important; }
+.reveal-stagger-3 { transition-delay: 300ms !important; }
+.reveal-stagger-4 { transition-delay: 400ms !important; }
+.reveal-stagger-5 { transition-delay: 500ms !important; }
+
+/* prefers-reduced-motion 대응 */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up, .reveal-fade, .reveal-scale {
+    transition-duration: 0.1s !important;
+    transform: none !important;
+  }
+}
+

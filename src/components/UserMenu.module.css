@@ -1,0 +1,81 @@
+.container {
+  position: relative;
+  display: inline-block;
+}
+
+.authLinks {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.loginLink {
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  font-weight: var(--fw-semibold);
+  transition: color 0.2s var(--ease);
+}
+
+.loginLink:hover {
+  color: var(--color-coral);
+}
+
+.authDivider {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.registerLink {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  font-weight: var(--fw-medium);
+  transition: color 0.2s var(--ease);
+}
+
+.registerLink:hover {
+  color: var(--color-primary);
+}
+
+.userButton {
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  font-weight: var(--fw-semibold);
+  background: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: color 0.2s var(--ease);
+}
+
+.userButton:hover {
+  color: var(--color-coral);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius);
+  padding: 8px 0;
+  min-width: 140px;
+  z-index: 100;
+  margin-top: 4px;
+}
+
+.dropdownItem {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  background: none;
+  text-decoration: none;
+}
+
+.dropdownItem:hover {
+  background: var(--color-bg);
+  color: var(--color-primary);
+}

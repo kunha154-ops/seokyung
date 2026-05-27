@@ -1,0 +1,222 @@
+/* ===== Footer — GMS-inspired, minimal & professional ===== */
+
+/* Top bar: Related organizations */
+.topBar {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.topBarInner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--sp-8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.topBarLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-4) var(--sp-8);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all var(--dur-fast) var(--ease);
+  position: relative;
+  letter-spacing: -0.01em;
+}
+
+.topBarLink::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 30%;
+  height: 40%;
+  width: 1px;
+  background: var(--color-border-light);
+}
+
+.topBarLink:last-child::after { display: none; }
+
+.topBarLink:hover {
+  color: var(--color-primary);
+  background: var(--color-mint-light);
+}
+
+/* Main Footer */
+.footer {
+  background: #f2f0ec;
+  color: var(--color-text-secondary);
+  padding: var(--sp-12) 0 var(--sp-8);
+}
+
+.inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--sp-8);
+}
+
+.mainContent {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-12);
+  padding-bottom: var(--sp-8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Logo area */
+.logoArea {
+  flex-shrink: 0;
+}
+
+.logoWrapper {
+  position: relative;
+  width: 200px;
+  height: 80px;
+  filter: grayscale(100%) brightness(0.55);
+  opacity: 0.65;
+  transition: all 0.4s var(--ease);
+}
+
+.logoWrapper:hover {
+  filter: grayscale(0%) brightness(1);
+  opacity: 1;
+}
+
+/* Info area */
+.infoArea {
+  flex: 1;
+  min-width: 0;
+}
+
+.infoRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  line-height: 1.9;
+  letter-spacing: -0.01em;
+}
+
+.infoItem {
+  white-space: nowrap;
+}
+
+.infoItem::after {
+  content: '|';
+  margin-left: var(--sp-2);
+  color: var(--color-border);
+}
+
+.infoItem:last-child::after { display: none; }
+
+.infoLabel {
+  font-weight: var(--fw-medium);
+  color: var(--color-text-secondary);
+  margin-right: var(--sp-1);
+}
+
+.copyright {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.01em;
+}
+
+.copyrightOrg {
+  font-weight: var(--fw-bold);
+  color: var(--color-text-secondary);
+}
+
+/* Quick Links */
+.linkGroup {
+  flex-shrink: 0;
+}
+
+.linkTitle {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: var(--sp-3);
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.linkItem a {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.linkItem a:hover {
+  color: var(--color-primary);
+}
+
+/* Bottom */
+.bottom {
+  padding-top: var(--sp-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom p {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 899px) {
+  .mainContent {
+    flex-direction: column;
+    gap: var(--sp-8);
+  }
+  .logoWrapper {
+    margin: 0 auto;
+  }
+  .infoArea {
+    text-align: center;
+  }
+  .infoRow {
+    justify-content: center;
+  }
+  .linkGroup {
+    text-align: center;
+  }
+  .linkList {
+    align-items: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .topBarInner {
+    flex-wrap: wrap;
+  }
+  .topBarLink {
+    flex: 1 1 auto;
+    min-width: 100px;
+    text-align: center;
+    padding: var(--sp-3) var(--sp-4);
+    font-size: var(--fs-xs);
+  }
+  .infoItem {
+    white-space: normal;
+  }
+  .bottom {
+    text-align: center;
+  }
+}

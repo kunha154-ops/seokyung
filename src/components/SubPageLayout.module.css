@@ -1,0 +1,122 @@
+.wrapper {
+  margin-top: var(--header-h);
+}
+
+/* Page Header */
+.pageHeader {
+  background: var(--color-primary);
+  padding: var(--sp-12) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.headerInner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--sp-8);
+  position: relative;
+  z-index: 2;
+}
+
+.pageTitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-2xl);
+  color: #fff;
+  margin-bottom: var(--sp-2);
+  letter-spacing: -0.02em;
+}
+
+.breadcrumb {
+  font-size: var(--fs-xs);
+  color: rgba(255,255,255,0.4);
+}
+
+.breadcrumb a {
+  color: rgba(255,255,255,0.4);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.breadcrumb a:hover { color: var(--color-coral-light); }
+
+.sep {
+  margin: 0 var(--sp-2);
+  opacity: 0.4;
+}
+
+.current {
+  color: var(--color-coral);
+  font-weight: var(--fw-medium);
+}
+
+/* Content */
+.content {
+  padding: var(--sp-12) 0 var(--sp-16);
+}
+
+.inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--sp-8);
+  display: flex;
+  gap: var(--sp-12);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.sideList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  position: sticky;
+  top: calc(var(--header-h) + var(--sp-8));
+  padding-right: var(--sp-4);
+  border-right: 1px solid var(--color-border-light);
+}
+
+.sideLink {
+  display: flex;
+  align-items: center;
+  padding: var(--sp-3) var(--sp-4);
+  font-size: var(--fs-base);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius);
+  transition: all var(--dur-fast) var(--ease);
+  font-weight: var(--fw-medium);
+  min-height: 44px;
+}
+
+.sideLink:hover {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.sideLinkActive {
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: var(--fw-bold);
+  box-shadow: 0 4px 12px rgba(12, 45, 72, 0.15);
+}
+
+.sideLinkActive:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 899px) {
+  .sidebar { display: none; }
+  .inner { gap: 0; }
+}
+
+@media (max-width: 768px) {
+  .pageHeader { padding: var(--sp-10) 0; }
+}

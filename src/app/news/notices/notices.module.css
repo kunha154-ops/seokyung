@@ -1,0 +1,195 @@
+.listWrap { width: 100%; }
+
+/* Search */
+.searchBar {
+  display: flex;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-6);
+}
+
+.searchInput {
+  flex: 1;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+  font-family: var(--font-body);
+  transition: border-color var(--dur-fast) var(--ease);
+  min-height: 44px;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(12,45,72,0.06);
+}
+
+.searchBtn {
+  padding: 0 var(--sp-5);
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius);
+  font-size: var(--fs-base);
+  min-height: 44px;
+  min-width: 44px;
+  transition: background var(--dur-fast) var(--ease);
+}
+.searchBtn:hover { background: var(--color-primary-light); }
+
+/* Table */
+.tableWrap { overflow-x: auto; }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 2px solid var(--color-primary);
+}
+
+.table th {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  color: var(--color-text-secondary);
+  padding: var(--sp-4) var(--sp-4);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--color-surface);
+}
+
+.thNum { width: 80px; text-align: center; }
+.thDate { width: 120px; text-align: center; }
+.thViews { width: 80px; text-align: center; }
+
+.table td {
+  padding: var(--sp-4) var(--sp-4);
+  border-bottom: 1px solid var(--color-border-light);
+  font-size: var(--fs-base);
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.table tbody tr:hover td {
+  background: var(--color-mint-light);
+}
+
+.tdNum { text-align: center; color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.tdDate { color: var(--color-text-muted); font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
+.tdViews { text-align: center; color: var(--color-text-muted); font-size: var(--fs-xs); }
+
+.tdTitle a {
+  color: var(--color-text);
+  font-weight: var(--fw-medium);
+  transition: color var(--dur-fast) var(--ease);
+}
+.tdTitle a:hover { color: var(--color-primary); }
+
+.pinned { background: var(--color-bg); }
+
+.pinnedBadge {
+  display: inline-block;
+  padding: 1px 7px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 10px;
+  font-weight: var(--fw-semibold);
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-8);
+}
+
+.pageBtn {
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: var(--fs-xs);
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  min-height: 36px;
+  min-width: 36px;
+  transition: all var(--dur-fast) var(--ease);
+}
+.pageBtn:hover:not(:disabled) { border-color: var(--color-primary); color: var(--color-primary); }
+.pageBtn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.pageBtnActive {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .table thead {
+    display: none;
+  }
+  
+  .table tbody, .table tr, .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    position: relative;
+    padding: var(--sp-4);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    margin-bottom: var(--sp-3);
+    box-shadow: var(--shadow-xs);
+  }
+  
+  .table tr.pinned {
+    background: var(--color-mint-light);
+    border-color: var(--color-primary-light);
+  }
+
+  .table td {
+    padding: 0;
+    border: none;
+    background: transparent !important;
+  }
+
+  .tdNum { 
+    text-align: left; 
+    margin-bottom: var(--sp-2);
+  }
+
+  .tdTitle {
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-bold);
+    margin-bottom: var(--sp-3);
+  }
+  
+  .tdTitle a {
+    display: block;
+    white-space: normal;
+  }
+
+  .tdDate {
+    display: inline-block;
+    color: var(--color-text-muted);
+    font-size: var(--fs-sm);
+    margin-right: var(--sp-3);
+  }
+  
+  .tdViews {
+    display: inline-block;
+    text-align: left;
+    color: var(--color-text-muted);
+    font-size: var(--fs-sm);
+  }
+  
+  .tdViews::before {
+    content: '조회 ';
+  }
+}
+
+.pageBtnDisabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
