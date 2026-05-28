@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./HeroSlider.module.css";
 
-import { HeroSlide } from "@/actions/hero";
+import type { HeroSlide } from "@/actions/hero";
 
 export default function HeroSlider({ initialSlides = [] }: { initialSlides?: HeroSlide[] }) {
   // If no slides are returned from DB, use a default fallback slide

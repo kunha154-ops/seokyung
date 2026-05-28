@@ -82,15 +82,24 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
           );
         })()}
 
-        {newsItem.thumbnail && (
+        {newsItem.thumbnail_url && (
           <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
-            <img src={newsItem.thumbnail} alt={newsItem.title} style={{ maxWidth: '100%', maxHeight: '500px', borderRadius: '8px' }} />
+            <img src={newsItem.thumbnail_url} alt={newsItem.title} style={{ maxWidth: '100%', maxHeight: '500px', borderRadius: '8px' }} />
           </div>
         )}
 
         <div style={{ whiteSpace: 'pre-line', lineHeight: 1.9, color: 'var(--color-text-secondary)', minHeight: '200px', fontSize: 'var(--fs-base)' }}>
           {newsItem.content}
         </div>
+
+        {/* Body Images */}
+        {newsItem.images && newsItem.images.length > 0 && (
+          <div style={{ marginTop: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', alignItems: 'center' }}>
+            {newsItem.images.map(img => (
+              <img key={img.id} src={img.image_url} alt="본문 이미지" style={{ maxWidth: '100%', borderRadius: '8px' }} />
+            ))}
+          </div>
+        )}
 
         {/* Attachments */}
         {attachments.length > 0 && (

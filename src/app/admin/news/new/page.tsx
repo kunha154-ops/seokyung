@@ -23,7 +23,19 @@ export default function NewNewsPage() {
 
             <div className={styles.formGroup}>
               <label className={styles.formLabel} htmlFor="content">내용</label>
-              <textarea id="content" name="content" className={styles.formTextarea} placeholder="소식 내용을 입력하세요" required />
+              <textarea id="content" name="content" className={styles.formTextarea} placeholder="소식 내용을 입력하세요" required style={{ minHeight: '300px' }} />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="thumbnail">대표 이미지 (썸네일)</label>
+              <input type="file" id="thumbnail" name="thumbnail" accept="image/jpeg, image/png, image/webp" className={styles.formInput} />
+              <p style={{ fontSize: '0.8rem', color: '#6b7280', marginTop: '0.25rem' }}>* 16:9 또는 4:3 비율 권장 (최대 5MB). 확장자는 jpg, jpeg, png, webp만 허용됩니다.</p>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="bodyImages">본문 이미지 (여러 장 가능)</label>
+              <input type="file" id="bodyImages" name="bodyImages" accept="image/jpeg, image/png, image/webp" className={styles.formInput} multiple />
+              <p style={{ fontSize: '0.8rem', color: '#6b7280', marginTop: '0.25rem' }}>* 여러 이미지를 선택할 수 있습니다. 각 파일은 최대 5MB입니다.</p>
             </div>
 
             <div className={styles.formActions}>

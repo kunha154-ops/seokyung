@@ -206,7 +206,7 @@
 @media (max-width: 768px) {
   .hero { height: 620px; }
   .bgImage {
-    object-position: center top !important;
+    object-position: center top;
   }
   .overlay {
     background: linear-gradient(

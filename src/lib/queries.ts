@@ -94,14 +94,25 @@ export function deleteNotice(id: number): boolean {
 }
 
 // News functions
+export interface NewsImage {
+  id: number;
+  news_id: number;
+  image_url: string;
+  storage_path: string;
+  sort_order: number;
+  created_at: string;
+}
+
 export interface NewsItem {
   id: number;
   title: string;
   content: string;
-  thumbnail: string | null;
+  thumbnail_url: string | null;
+  thumbnail_path: string | null;
   views: number;
   created_at: string;
   updated_at: string;
+  images?: NewsImage[];
 }
 
 export function getNewsList(page = 1, pageSize = 10, search = ''): { news: NewsItem[]; total: number; totalPages: number } {
@@ -126,21 +137,43 @@ export function getNewsList(page = 1, pageSize = 10, search = ''): { news: NewsI
 export function getNewsById(id: number): NewsItem | undefined {
   const db = getDb();
   db.prepare('UPDATE news SET views = views + 1 WHERE id = ?').run(id);
-  return db.prepare('SELECT * FROM news WHERE id = ?').get(id) as NewsItem | undefined;
+  const news = db.prepare('SELECT * FROM news WHERE id = ?').get(id) as NewsItem | undefined;
+  if (news) {
+    news.images = db.prepare('SELECT * FROM news_images WHERE news_id = ? ORDER BY sort_order ASC, created_at ASC').all(id) as NewsImage[];
+  }
+  return news;
 }
 
-export function createNews(title: string, content: string): NewsItem {
+export function createNews(title: string, content: string, thumbnailUrl: string | null = null, thumbnailPath: string | null = null): NewsItem {
   const db = getDb();
-  const result = db.prepare('INSERT INTO news (title, content) VALUES (?, ?)').run(title, content);
+  const result = db.prepare('INSERT INTO news (title, content, thumbnail_url, thumbnail_path) VALUES (?, ?, ?, ?)').run(title, content, thumbnailUrl, thumbnailPath);
   return db.prepare('SELECT * FROM news WHERE id = ?').get(result.lastInsertRowid) as NewsItem;
 }
 
-export function updateNews(id: number, title: string, content: string): NewsItem | undefined {
+export function updateNews(id: number, title: string, content: string, thumbnailUrl?: string | null, thumbnailPath?: string | null): NewsItem | undefined {
   const db = getDb();
-  db.prepare(
-    "UPDATE news SET title = ?, content = ?, updated_at = datetime('now', 'localtime') WHERE id = ?"
-  ).run(title, content, id);
+  if (thumbnailUrl !== undefined && thumbnailPath !== undefined) {
+    db.prepare(
+      "UPDATE news SET title = ?, content = ?, thumbnail_url = ?, thumbnail_path = ?, updated_at = datetime('now', 'localtime') WHERE id = ?"
+    ).run(title, content, thumbnailUrl, thumbnailPath, id);
+  } else {
+    db.prepare(
+      "UPDATE news SET title = ?, content = ?, updated_at = datetime('now', 'localtime') WHERE id = ?"
+    ).run(title, content, id);
+  }
   return db.prepare('SELECT * FROM news WHERE id = ?').get(id) as NewsItem | undefined;
+}
+
+export function addNewsImage(newsId: number, imageUrl: string, storagePath: string, sortOrder = 0): NewsImage {
+  const db = getDb();
+  const result = db.prepare('INSERT INTO news_images (news_id, image_url, storage_path, sort_order) VALUES (?, ?, ?, ?)').run(newsId, imageUrl, storagePath, sortOrder);
+  return db.prepare('SELECT * FROM news_images WHERE id = ?').get(result.lastInsertRowid) as NewsImage;
+}
+
+export function deleteNewsImage(id: number): boolean {
+  const db = getDb();
+  const result = db.prepare('DELETE FROM news_images WHERE id = ?').run(id);
+  return result.changes > 0;
 }
 
 export function deleteNews(id: number): boolean {

@@ -2,14 +2,14 @@ import Link from "next/link";
 import AdminTopBar from "../../AdminTopBar";
 import styles from "../../admin.module.css";
 import { getGalleryPostById } from "@/lib/queries";
-import { uploadPhotoAction, deletePhotoAction } from "@/app/actions/gallery-crud";
+import { uploadPhotoAction } from "@/app/actions/gallery-crud";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import DeletePhotoButton from "@/components/admin/DeletePhotoButton";
 
-export default async function AlbumDetailsPage({ params }: { params: { id: string } }) {
+export default async function AlbumDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const albumId = (await params).id;
-  const album = getGalleryPostById(Number(albumId));
+  const album = getGalleryPostById(Number(id));
 
   if (!album) {
     notFound();
@@ -23,7 +23,7 @@ export default async function AlbumDetailsPage({ params }: { params: { id: strin
       <div className={styles.container}>
         <div className={styles.header}>
           <div>
-            <h1 className={styles.pageTitle}>{album.title} - 사진 관리</h1>
+            <h1 className={styles.pageTitle}>{album.title} <span style={{ fontSize: '0.85rem', fontWeight: 400, color: 'var(--color-text-muted)' }}>- 사진 관리</span></h1>
             <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', marginTop: '0.25rem' }}>{album.description}</p>
           </div>
           <Link href="/admin/gallery" className={styles.backBtn}>
@@ -31,40 +31,40 @@ export default async function AlbumDetailsPage({ params }: { params: { id: strin
           </Link>
         </div>
 
-        <div className={styles.card} style={{ marginBottom: '2rem' }}>
+        <div className={styles.formCard} style={{ marginBottom: '2rem' }}>
           <h2 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--color-primary)' }}>새 사진 업로드</h2>
-          <form action={uploadPhotoAction} className={styles.form}>
-            <input type="hidden" name="albumId" value={albumId} />
+          <form action={uploadPhotoAction}>
+            <input type="hidden" name="albumId" value={id} />
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div className={styles.formGroup} style={{ marginBottom: 0 }}>
-                <label htmlFor="photo">사진 파일 <span style={{color: 'red'}}>*</span></label>
-                <input 
-                  type="file" 
-                  id="photo" 
-                  name="photo" 
-                  accept="image/*"
-                  required 
-                  className={styles.input} 
-                />
-              </div>
-              
-              <div className={styles.formGroup} style={{ marginBottom: 0 }}>
-                <label htmlFor="caption">설명 (선택)</label>
-                <input 
-                  type="text" 
-                  id="caption" 
-                  name="caption" 
-                  className={styles.input} 
-                  placeholder="사진 설명을 입력하세요"
-                />
-              </div>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="photo">사진 파일 <span style={{color: 'red'}}>*</span></label>
+              <input 
+                type="file" 
+                id="photo" 
+                name="photo" 
+                accept="image/jpeg, image/png, image/webp"
+                multiple
+                required 
+                className={styles.formInput} 
+              />
+              <p style={{ fontSize: '0.8rem', color: '#6b7280', marginTop: '0.25rem' }}>* 여러 이미지를 선택할 수 있습니다. (각 최대 5MB)</p>
+            </div>
+            
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="caption">공통 설명 (선택)</label>
+              <input 
+                type="text" 
+                id="caption" 
+                name="caption" 
+                className={styles.formInput} 
+                placeholder="업로드하는 사진들의 공통 설명을 입력하세요"
+              />
+            </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
-                <button type="submit" className={styles.submitBtn} style={{ padding: '0.75rem 2rem' }}>
-                  사진 업로드
-                </button>
-              </div>
+            <div className={styles.formActions}>
+              <button type="submit" className={styles.submitBtn}>
+                사진 업로드
+              </button>
             </div>
           </form>
         </div>
@@ -80,7 +80,7 @@ export default async function AlbumDetailsPage({ params }: { params: { id: strin
                 const isValidImage = photo.file_path && photo.file_path.trim() !== '';
                 
                 return (
-                  <div key={photo.id} style={{ border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                  <div key={photo.id} style={{ border: '1px solid var(--color-border-light)', borderRadius: '8px', overflow: 'hidden', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--color-surface)' }}>
                     <div style={{ position: 'relative', height: '160px', backgroundColor: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       {isValidImage ? (
                         <Image src={photo.file_path} alt={photo.file_name || '갤러리 사진'} fill sizes="(max-width: 768px) 100vw, 250px" style={{ objectFit: 'cover' }} />
@@ -90,27 +90,14 @@ export default async function AlbumDetailsPage({ params }: { params: { id: strin
                     </div>
                     <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', flexGrow: 1, justifyContent: 'space-between' }}>
                       <div>
-                        <p style={{ fontSize: '0.9rem', color: '#374151', margin: 0, fontWeight: 600, wordBreak: 'break-all' }}>
+                        <p style={{ fontSize: '0.9rem', color: 'var(--color-text)', margin: 0, fontWeight: 600, wordBreak: 'break-all' }}>
                           {photo.file_name || <span style={{ color: '#9ca3af', fontWeight: 'normal' }}>설명 없음</span>}
                         </p>
                       </div>
                       
-                      <form action={deletePhotoAction} style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-                        <input type="hidden" name="id" value={photo.id} />
-                        <input type="hidden" name="albumId" value={albumId} />
-                        <button 
-                          type="submit" 
-                          className={styles.deleteBtn} 
-                          style={{ padding: '0.4rem 0.75rem', fontSize: '0.8rem', width: 'auto' }}
-                          onClick={(e) => {
-                            if (!confirm('정말 이 사진을 삭제하시겠습니까?\n삭제된 사진은 복구할 수 없습니다.')) {
-                              e.preventDefault();
-                            }
-                          }}
-                        >
-                          삭제
-                        </button>
-                      </form>
+                      <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+                        <DeletePhotoButton photoId={photo.id} albumId={Number(id)} />
+                      </div>
                     </div>
                   </div>
                 );

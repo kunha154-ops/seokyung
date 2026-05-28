@@ -196,6 +196,14 @@ function initializeSchema(db: Database.Database) {
     insertHero.run('복음의 사명', '세상을 향해<br />그리스도의 사랑을 전합니다', '따뜻한 교제와 협력으로 하나님 나라를 확장하는 공동체', '/images/slide4.png', 'center center', '포토갤러리', '/gallery/photos', '자료실 바로가기', '/resources/forms', 3);
   }
 
+  // Ensure news table has thumbnail columns
+  try {
+    db.prepare("ALTER TABLE news ADD COLUMN thumbnail_url TEXT").run();
+    db.prepare("ALTER TABLE news ADD COLUMN thumbnail_path TEXT").run();
+  } catch (e) {
+    // Columns already exist
+  }
+
   // Seed with sample data if tables are empty
   const count = db.prepare('SELECT COUNT(*) as count FROM notices').get() as { count: number };
   if (count.count === 0) {

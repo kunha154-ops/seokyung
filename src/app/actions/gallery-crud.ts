@@ -54,15 +54,19 @@ export async function uploadPhotoAction(formData: FormData) {
   
   const albumId = Number(formData.get('albumId'));
   const caption = formData.get('caption') as string;
-  const photoFile = formData.get('photo') as File | null;
+  const photoFiles = formData.getAll('photo') as File[];
   
-  if (!albumId || !photoFile || photoFile.size === 0) {
+  if (!albumId || photoFiles.length === 0 || photoFiles[0].size === 0) {
     throw new Error('앨범 ID와 사진 파일이 필요합니다.');
   }
   
-  const imagePath = await saveUpload(photoFile, `gallery/albums/${albumId}`);
-  console.log(`[Photo Upload] File saved to: ${imagePath}`);
-  addGalleryMedia(albumId, 'image', photoFile.name, imagePath, photoFile.size.toString(), photoFile.type);
+  for (const photoFile of photoFiles) {
+    if (photoFile.size > 0) {
+      const imagePath = await saveUpload(photoFile, `gallery/albums/${albumId}`);
+      console.log(`[Photo Upload] File saved to: ${imagePath}`);
+      addGalleryMedia(albumId, 'image', caption || photoFile.name, imagePath, photoFile.size.toString(), photoFile.type);
+    }
+  }
   
   revalidatePath(`/gallery/photos/${albumId}`);
   revalidatePath(`/admin/gallery/${albumId}`);

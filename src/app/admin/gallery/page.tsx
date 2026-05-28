@@ -2,7 +2,7 @@ import Link from "next/link";
 import AdminTopBar from "../AdminTopBar";
 import styles from "../admin.module.css";
 import { getGalleryPosts } from "@/lib/queries";
-import { deleteAlbumAction } from "@/app/actions/gallery-crud";
+import DeleteAlbumButton from "@/components/admin/DeleteAlbumButton";
 
 export const dynamic = 'force-dynamic';
 
@@ -51,10 +51,7 @@ export default function AdminGalleryPage() {
                     <td className={styles.actionCell}>
                       <div className={styles.actionBtns}>
                         <Link href={`/admin/gallery/${item.id}`} className={styles.editBtn} aria-label={`앨범 ${item.id} 사진 관리`}>사진 관리</Link>
-                        <form action={deleteAlbumAction} style={{ display: 'inline' }}>
-                          <input type="hidden" name="id" value={item.id} />
-                          <button type="submit" className={styles.deleteBtn} aria-label={`앨범 ${item.id} 삭제`}>삭제</button>
-                        </form>
+                        <DeleteAlbumButton albumId={item.id} />
                       </div>
                     </td>
                   </tr>

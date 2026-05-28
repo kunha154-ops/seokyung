@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { HeroSlide, deleteHeroSlide, toggleHeroSlideActive, updateHeroSlideOrders } from '@/actions/hero';
 import styles from './heroAdmin.module.css';
-import AdminTopBar from '../AdminTopBar';
+import AdminTopBar from '@/app/admin/AdminTopBar';
 
 export default function HeroAdminList({ initialSlides }: { initialSlides: HeroSlide[] }) {
   const [slides, setSlides] = useState(initialSlides);

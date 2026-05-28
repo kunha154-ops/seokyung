@@ -113,18 +113,18 @@ export async function updateHeroSlide(id: number, data: Partial<HeroSlide>) {
   `);
 
   stmt.run(
-    data.subtitle,
-    data.title,
-    data.description,
-    data.desktop_image,
-    data.mobile_image,
-    data.object_position,
-    data.primary_btn_text,
-    data.primary_btn_link,
-    data.secondary_btn_text,
-    data.secondary_btn_link,
-    data.is_active,
-    data.sort_order,
+    data.subtitle ?? null,
+    data.title ?? null,
+    data.description ?? null,
+    data.desktop_image ?? null,
+    data.mobile_image ?? null,
+    data.object_position ?? null,
+    data.primary_btn_text ?? null,
+    data.primary_btn_link ?? null,
+    data.secondary_btn_text ?? null,
+    data.secondary_btn_link ?? null,
+    data.is_active ?? null,
+    data.sort_order ?? null,
     id
   );
 
@@ -146,7 +146,7 @@ export async function deleteHeroSlide(id: number) {
 export async function toggleHeroSlideActive(id: number, isActive: boolean) {
   await requireAdmin();
   const db = getDb();
-  db.prepare('UPDATE hero_slides SET is_active = ?, updated_at = datetime("now", "localtime") WHERE id = ?').run(isActive ? 1 : 0, id);
+  db.prepare("UPDATE hero_slides SET is_active = ?, updated_at = datetime('now', 'localtime') WHERE id = ?").run(isActive ? 1 : 0, id);
   
   revalidatePath('/');
   revalidatePath('/admin/hero');
@@ -156,7 +156,7 @@ export async function toggleHeroSlideActive(id: number, isActive: boolean) {
 export async function updateHeroSlideOrders(updates: { id: number; sort_order: number }[]) {
   await requireAdmin();
   const db = getDb();
-  const updateStmt = db.prepare('UPDATE hero_slides SET sort_order = ?, updated_at = datetime("now", "localtime") WHERE id = ?');
+  const updateStmt = db.prepare("UPDATE hero_slides SET sort_order = ?, updated_at = datetime('now', 'localtime') WHERE id = ?");
   
   const updateMany = db.transaction((items) => {
     for (const item of items) {

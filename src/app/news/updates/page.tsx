@@ -67,37 +67,35 @@ export default async function UpdatesPage({ searchParams }: PageProps) {
           {search && <span>&ldquo;{search}&rdquo; 검색 결과</span>}
         </div>
         
-        <div className={styles.tableWrap}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={styles.thNum}>번호</th>
-                <th className={styles.thTitle}>제목</th>
-                <th className={styles.thDate}>등록일</th>
-                <th className={styles.thViews}>조회</th>
-              </tr>
-            </thead>
-            <tbody>
-              {news.length === 0 ? (
-                <tr>
-                  <td colSpan={4} style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-text-muted)' }}>
-                    {search ? `"${search}"에 대한 검색 결과가 없습니다.` : '등록된 소식이 없습니다.'}
-                  </td>
-                </tr>
-              ) : (
-                news.map((item) => (
-                  <tr key={item.id}>
-                    <td className={styles.tdNum}>{item.id}</td>
-                    <td className={styles.tdTitle}>
-                      <Link href={`/news/updates/${item.id}`}>{item.title}</Link>
-                    </td>
-                    <td className={styles.tdDate}>{formatDate(item.created_at)}</td>
-                    <td className={styles.tdViews}>{item.views}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+          {news.length === 0 ? (
+            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', color: 'var(--color-text-muted)' }}>
+              {search ? `"${search}"에 대한 검색 결과가 없습니다.` : '등록된 소식이 없습니다.'}
+            </div>
+          ) : (
+            news.map((item) => (
+              <div key={item.id} style={{ border: '1px solid var(--color-border-light)', borderRadius: '12px', overflow: 'hidden', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--color-surface)' }}>
+                <Link href={`/news/updates/${item.id}`} style={{ display: 'block', position: 'relative', height: '180px', backgroundColor: '#f3f4f6' }}>
+                  {item.thumbnail_url ? (
+                    <img src={item.thumbnail_url} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', fontSize: '2rem' }}>
+                      📰
+                    </div>
+                  )}
+                </Link>
+                <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                  <h3 style={{ fontSize: '1.1rem', marginBottom: '0.75rem', fontWeight: 600, lineHeight: 1.4, flexGrow: 1 }}>
+                    <Link href={`/news/updates/${item.id}`} style={{ color: 'var(--color-text)' }}>{item.title}</Link>
+                  </h3>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>
+                    <span>{formatDate(item.created_at)}</span>
+                    <span>조회 {item.views}</span>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
 
         {/* Pagination */}
