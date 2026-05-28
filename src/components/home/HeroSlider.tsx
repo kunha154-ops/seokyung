@@ -9,9 +9,60 @@ import type { HeroSlide } from "@/actions/hero";
 
 export default function HeroSlider({ initialSlides = [] }: { initialSlides?: HeroSlide[] }) {
   // If no slides are returned from DB, use a default fallback slide
-  const SLIDES = initialSlides.length > 0 ? initialSlides : [
+  const SLIDES = initialSlides && initialSlides.length > 0 ? initialSlides : [
     {
-      id: 0,
+      id: 1,
+      subtitle: "신뢰와 은혜",
+      title: "세상의 빛이 되는<br />거룩한 발걸음",
+      description: "따뜻한 교제와 협력으로 하나님 나라를 확장합니다.",
+      desktop_image: "/images/slide1.jpg",
+      mobile_image: null,
+      object_position: "right center",
+      primary_btn_text: "노회 현황",
+      primary_btn_link: "/organization/districts",
+      secondary_btn_text: "자료실 바로가기",
+      secondary_btn_link: "/resources/forms",
+      is_active: 1,
+      sort_order: 0,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: 2,
+      subtitle: "대한예수교장로회 서경노회",
+      title: "교회와 교회를 잇고,<br />복음의 사명을 함께 감당하는 공동체",
+      description: "바른 신학과 신앙 위에서 교회의 본질을 지켜갑니다.",
+      desktop_image: "/images/slide2.jpg",
+      mobile_image: null,
+      object_position: "center center",
+      primary_btn_text: "노회 소개",
+      primary_btn_link: "/about/greeting",
+      secondary_btn_text: "자료실 바로가기",
+      secondary_btn_link: "/resources/forms",
+      is_active: 1,
+      sort_order: 1,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: 3,
+      subtitle: "대한예수교장로회 서경노회",
+      title: "질서와 신뢰,<br />복음의 사명으로 잇는 공동체",
+      description: "바른 신학과 신앙 위에서 교회의 본질을 지켜갑니다.",
+      desktop_image: "/images/slide3.jpg",
+      mobile_image: null,
+      object_position: "center center",
+      primary_btn_text: "공지사항",
+      primary_btn_link: "/news/notices",
+      secondary_btn_text: "자료실 바로가기",
+      secondary_btn_link: "/resources/forms",
+      is_active: 1,
+      sort_order: 2,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: 4,
       subtitle: "복음의 사명",
       title: "세상을 향해<br />그리스도의 사랑을 전합니다",
       description: "따뜻한 교제와 협력으로 하나님 나라를 확장하는 공동체",
@@ -22,6 +73,10 @@ export default function HeroSlider({ initialSlides = [] }: { initialSlides?: Her
       primary_btn_link: "/gallery/photos",
       secondary_btn_text: "자료실 바로가기",
       secondary_btn_link: "/resources/forms",
+      is_active: 1,
+      sort_order: 3,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     }
   ];
 
