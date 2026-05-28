@@ -65,7 +65,9 @@ export default function OfficersPage() {
                   src={`/images/officers/${officer.name.split(" ")[0]}.jpg?v=3`} 
                   alt={officer.name}
                   fill
-                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 250px"
+                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 300px"
+                  quality={100}
+                  unoptimized={true}
                   style={{ objectFit: 'cover' }}
                 />
               </div>
