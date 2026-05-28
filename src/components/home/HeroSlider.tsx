@@ -27,6 +27,7 @@ export default function HeroSlider({ initialSlides = [] }: { initialSlides?: Her
 
   const [current, setCurrent] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
   const goTo = useCallback(
     (idx: number) => {
@@ -44,58 +45,59 @@ export default function HeroSlider({ initialSlides = [] }: { initialSlides?: Her
 
     const timer = setInterval(() => goTo(current + 1), 7000);
     return () => clearInterval(timer);
-  }, [current, goTo]);
+  }, [current, goTo, SLIDES.length]);
 
   const slide = SLIDES[current];
 
   return (
     <section className={styles.hero} aria-label="메인 비주얼">
       {/* Background images */}
-      {SLIDES.map((s, i) => (
-        <div
-          key={s.id}
-          className={`${styles.bgSlide} ${i === current ? styles.bgActive : ""}`}
-        >
-          {s.mobile_image ? (
-            <>
+      {SLIDES.map((s, i) => {
+        const hasMobileImage = typeof s.mobile_image === "string" && s.mobile_image.trim().length > 0 && s.mobile_image !== "null" && s.mobile_image !== "undefined";
+        const hasDesktopImage = typeof s.desktop_image === "string" && s.desktop_image.trim().length > 0;
+        
+        // 에러 상태인 경우 보여주지 않음
+        const desktopError = imageErrors[`desktop_${s.id}`];
+        const mobileError = imageErrors[`mobile_${s.id}`];
+
+        return (
+          <div
+            key={s.id}
+            className={`${styles.bgSlide} ${i === current ? styles.bgActive : ""}`}
+            style={{ 
+              '--desktop-focal': s.object_position || 'center center',
+              '--mobile-focal': 'center top' // 모바일 기본 crop은 center top으로 하여 피사체 유지
+            } as React.CSSProperties}
+          >
+            {hasDesktopImage && !desktopError && (
               <Image
                 src={s.desktop_image}
-                alt="히어로 배경"
+                alt=""
                 fill
                 priority={i === 0}
                 sizes="100vw"
                 quality={100}
                 unoptimized={true}
-                className={`${styles.bgImage} ${styles.desktopOnly}`}
-                style={{ objectPosition: s.object_position }}
+                className={`${styles.bgImage} ${hasMobileImage && !mobileError ? styles.desktopOnly : ''}`}
+                onError={() => setImageErrors(prev => ({ ...prev, [`desktop_${s.id}`]: true }))}
               />
+            )}
+            {hasMobileImage && !mobileError && (
               <Image
-                src={s.mobile_image}
-                alt="히어로 배경"
+                src={s.mobile_image as string}
+                alt=""
                 fill
                 priority={i === 0}
                 sizes="100vw"
                 quality={100}
                 unoptimized={true}
                 className={`${styles.bgImage} ${styles.mobileOnly}`}
-                style={{ objectPosition: s.object_position }}
+                onError={() => setImageErrors(prev => ({ ...prev, [`mobile_${s.id}`]: true }))}
               />
-            </>
-          ) : (
-            <Image
-              src={s.desktop_image}
-              alt="히어로 배경"
-              fill
-              priority={i === 0}
-              sizes="100vw"
-              quality={100}
-              unoptimized={true}
-              className={styles.bgImage}
-              style={{ objectPosition: s.object_position }}
-            />
-          )}
-        </div>
-      ))}
+            )}
+          </div>
+        );
+      })}
 
       {/* Dark overlay */}
       <div className={styles.overlay} />
