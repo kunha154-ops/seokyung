@@ -7,6 +7,7 @@ import styles from './AdminNav.module.css';
 
 const ADMIN_MENUS = [
   { label: '대시보드', href: '/admin', exact: true },
+  { label: '히어로 슬라이드', href: '/admin/hero' },
   { label: '공지사항', href: '/admin/notices' },
   { label: '노회 소식', href: '/admin/news' },
   { label: '포토 갤러리', href: '/admin/gallery' },

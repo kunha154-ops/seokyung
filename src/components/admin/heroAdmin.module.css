@@ -1,0 +1,310 @@
+.adminPage {
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.pageTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem 0;
+}
+
+.actionsBar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btnPrimary {
+  background-color: #8b5cf6;
+  color: white;
+}
+.btnPrimary:hover {
+  background-color: #7c3aed;
+}
+
+.btnSecondary {
+  background-color: #fff;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+}
+.btnSecondary:hover {
+  background-color: #f3f4f6;
+}
+.btnSecondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.emptyState {
+  background: white;
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #6b7280;
+  border: 1px dashed #cbd5e1;
+}
+
+.slideList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.slideCard {
+  display: flex;
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  align-items: center;
+  gap: 1.5rem;
+  transition: opacity 0.2s;
+}
+
+.slideInactive {
+  opacity: 0.6;
+}
+
+.orderControls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: 40px;
+}
+
+.orderControls button {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.25rem;
+}
+.orderControls button:hover:not(:disabled) {
+  color: #8b5cf6;
+}
+.orderControls button:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
+.orderNumber {
+  font-weight: 700;
+  color: #334155;
+  font-size: 1.1rem;
+}
+
+.thumbnailWrap {
+  position: relative;
+  width: 160px;
+  height: 90px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f1f5f9;
+  flex-shrink: 0;
+}
+
+.mobileIndicator {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.slideInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.slideSubtitle {
+  font-size: 0.8rem;
+  color: #8b5cf6;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.slideTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.5rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slideStatus {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.badgeActive, .badgeInactive {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.badgeActive {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.badgeInactive {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+.slideActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actionBtn {
+  background: #f1f5f9;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  text-decoration: none;
+}
+.actionBtn:hover {
+  background: #e2e8f0;
+}
+
+.actionBtnDanger {
+  color: #ef4444;
+}
+.actionBtnDanger:hover {
+  background: #fee2e2;
+}
+
+/* Form Styles for Edit/New Page */
+.formCard {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  display: block;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.formHint {
+  display: block;
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+}
+
+.formInput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+.formInput:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.formRow {
+  display: flex;
+  gap: 1rem;
+}
+.formRow > div {
+  flex: 1;
+}
+
+.imageUploadGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .imageUploadGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.uploadBox {
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  background: #f8fafc;
+  transition: all 0.2s;
+}
+.uploadBox:hover {
+  border-color: #8b5cf6;
+  background: #f5f3ff;
+}
+
+.uploadInput {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.previewImage {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}

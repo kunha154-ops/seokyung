@@ -129,6 +129,24 @@ function initializeSchema(db: Database.Database) {
       expires_at TEXT NOT NULL,
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     );
+
+    CREATE TABLE IF NOT EXISTS hero_slides (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      subtitle TEXT,
+      title TEXT NOT NULL,
+      description TEXT,
+      desktop_image TEXT NOT NULL,
+      mobile_image TEXT,
+      object_position TEXT DEFAULT 'center center',
+      primary_btn_text TEXT,
+      primary_btn_link TEXT,
+      secondary_btn_text TEXT,
+      secondary_btn_link TEXT,
+      is_active INTEGER DEFAULT 1,
+      sort_order INTEGER DEFAULT 0,
+      created_at TEXT DEFAULT (datetime('now', 'localtime')),
+      updated_at TEXT DEFAULT (datetime('now', 'localtime'))
+    );
   `);
 
   // Migration for existing databases
@@ -141,6 +159,41 @@ function initializeSchema(db: Database.Database) {
     db.prepare("UPDATE users SET status = 'approved'").run();
   } catch (e) {
     // Columns already exist
+  }
+
+  // Ensure hero_slides table exists for existing databases
+  try {
+    db.prepare("SELECT 1 FROM hero_slides LIMIT 1").get();
+  } catch (e) {
+    db.exec(`
+      CREATE TABLE hero_slides (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        subtitle TEXT,
+        title TEXT NOT NULL,
+        description TEXT,
+        desktop_image TEXT NOT NULL,
+        mobile_image TEXT,
+        object_position TEXT DEFAULT 'center center',
+        primary_btn_text TEXT,
+        primary_btn_link TEXT,
+        secondary_btn_text TEXT,
+        secondary_btn_link TEXT,
+        is_active INTEGER DEFAULT 1,
+        sort_order INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT (datetime('now', 'localtime')),
+        updated_at TEXT DEFAULT (datetime('now', 'localtime'))
+      );
+    `);
+    
+    // 기본 슬라이드 데이터 추가 (이전 static 데이터 기반)
+    const insertHero = db.prepare(`
+      INSERT INTO hero_slides (subtitle, title, description, desktop_image, object_position, primary_btn_text, primary_btn_link, secondary_btn_text, secondary_btn_link, sort_order)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    insertHero.run('신뢰와 은혜', '세상의 빛이 되는<br />거룩한 발걸음', '따뜻한 교제와 협력으로 하나님 나라를 확장합니다.', '/images/slide1.jpg', 'right center', '노회 현황', '/organization/districts', '자료실 바로가기', '/resources/forms', 0);
+    insertHero.run('대한예수교장로회 서경노회', '교회와 교회를 잇고,<br />복음의 사명을 함께 감당하는 공동체', '바른 신학과 신앙 위에서 교회의 본질을 지켜갑니다.', '/images/slide2.jpg', 'center center', '노회 소개', '/about/greeting', '자료실 바로가기', '/resources/forms', 1);
+    insertHero.run('대한예수교장로회 서경노회', '질서와 신뢰,<br />복음의 사명으로 잇는 공동체', '바른 신학과 신앙 위에서 교회의 본질을 지켜갑니다.', '/images/slide3.jpg', 'center center', '공지사항', '/news/notices', '자료실 바로가기', '/resources/forms', 2);
+    insertHero.run('복음의 사명', '세상을 향해<br />그리스도의 사랑을 전합니다', '따뜻한 교제와 협력으로 하나님 나라를 확장하는 공동체', '/images/slide4.png', 'center center', '포토갤러리', '/gallery/photos', '자료실 바로가기', '/resources/forms', 3);
   }
 
   // Seed with sample data if tables are empty

@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     }
 
     // validate folder to prevent path traversal
-    if (!['gallery/photos', 'gallery/videos'].includes(folder)) {
+    if (!['gallery/photos', 'gallery/videos', 'hero/desktop', 'hero/mobile'].includes(folder)) {
       return NextResponse.json({ success: false, error: '잘못된 업로드 경로입니다.' }, { status: 400 });
     }
 

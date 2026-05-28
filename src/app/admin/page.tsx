@@ -20,8 +20,12 @@ export default function AdminPage() {
 
   const recentAlbums = db.prepare("SELECT id, title, created_at FROM gallery_posts WHERE type = 'photo' ORDER BY created_at DESC LIMIT 3").all() as any[];
   const emptyImageCount = db.prepare("SELECT COUNT(*) as total FROM gallery_media WHERE file_path IS NULL OR file_path = ''").get() as { total: number };
+  
+  const heroCountRow = db.prepare("SELECT COUNT(*) as total FROM hero_slides").get() as { total: number };
+  const activeHeroCountRow = db.prepare("SELECT COUNT(*) as total FROM hero_slides WHERE is_active = 1").get() as { total: number };
 
   const cards = [
+    { title: "히어로 슬라이드", count: `${activeHeroCountRow.total}건 노출 중`, desc: `총 등록: ${heroCountRow.total}건`, href: "/admin/hero", color: "#8b5cf6" },
     { title: "공지사항", count: noticeCount + '건', desc: notices[0] ? `최근 등록: ${notices[0].title}` : '등록된 공지 없음', href: "/admin/notices", color: "#1976d2" },
     { title: "노회 소식", count: newsCount + '건', desc: news[0] ? `최근 등록: ${news[0].title}` : '등록된 소식 없음', href: "/admin/news", color: "#0d9488" },
     { title: "포토 갤러리", count: `앨범 ${photoAlbumRow.total} / 사진 ${photoCountRow.total}`, desc: recentAlbums[0] ? `최근 앨범: ${recentAlbums[0].title}` : '등록된 앨범 없음', href: "/admin/gallery", color: "#eab308" },
@@ -54,6 +58,7 @@ export default function AdminPage() {
         <div style={{ marginBottom: '3rem' }}>
           <h2 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: 'var(--color-primary)' }}>빠른 작업</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem' }}>
+            <Link href="/admin/hero/new" className={styles.actionBtn} style={{ background: '#8b5cf6' }}>+ 히어로 등록</Link>
             <Link href="/admin/notices/new" className={styles.actionBtn}>+ 공지사항 작성</Link>
             <Link href="/admin/news/new" className={styles.actionBtn}>+ 노회 소식 작성</Link>
             <Link href="/admin/gallery" className={styles.actionBtn} style={{ background: '#f59e0b' }}>+ 새 앨범 생성</Link>

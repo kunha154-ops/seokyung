@@ -5,46 +5,26 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./HeroSlider.module.css";
 
-const SLIDES = [
-  {
-    image: "/images/slide1.jpg",
-    imageAlt: "푸른 하늘 십자가",
-    objectPosition: "right center", // 십자가가 우측에 있으므로 잘리지 않게 조정
-    subtitle: "신뢰와 은혜",
-    title: <>세상의 빛이 되는<br />거룩한 발걸음</>,
-    desc: "따뜻한 교제와 협력으로 하나님 나라를 확장합니다.",
-    cta: { label: "노회 현황", href: "/organization/districts" },
-  },
-  {
-    image: "/images/slide2.jpg",
-    imageAlt: "서경노회 예배당 내부",
-    objectPosition: "center center",
-    subtitle: "대한예수교장로회 서경노회",
-    title: <>교회와 교회를 잇고,<br />복음의 사명을 함께 감당하는 공동체</>,
-    desc: "바른 신학과 신앙 위에서 교회의 본질을 지켜갑니다.",
-    cta: { label: "노회 소개", href: "/about/greeting" },
-  },
-  {
-    image: "/images/slide3.jpg",
-    imageAlt: "서경노회 행사 단체사진",
-    objectPosition: "center center",
-    subtitle: "대한예수교장로회 서경노회",
-    title: <>질서와 신뢰,<br />복음의 사명으로 잇는 공동체</>,
-    desc: "바른 신학과 신앙 위에서 교회의 본질을 지켜갑니다.",
-    cta: { label: "공지사항", href: "/news/notices" },
-  },
-  {
-    image: "/images/slide4.png",
-    imageAlt: "서경노회 정기회 진행 사진",
-    objectPosition: "center center",
-    subtitle: "복음의 사명",
-    title: <>세상을 향해<br />그리스도의 사랑을 전합니다</>,
-    desc: "따뜻한 교제와 협력으로 하나님 나라를 확장하는 공동체",
-    cta: { label: "포토갤러리", href: "/gallery/photos" },
-  },
-];
+import { HeroSlide } from "@/actions/hero";
 
-export default function HeroSlider() {
+export default function HeroSlider({ initialSlides = [] }: { initialSlides?: HeroSlide[] }) {
+  // If no slides are returned from DB, use a default fallback slide
+  const SLIDES = initialSlides.length > 0 ? initialSlides : [
+    {
+      id: 0,
+      subtitle: "복음의 사명",
+      title: "세상을 향해<br />그리스도의 사랑을 전합니다",
+      description: "따뜻한 교제와 협력으로 하나님 나라를 확장하는 공동체",
+      desktop_image: "/images/slide4.png",
+      mobile_image: null,
+      object_position: "center center",
+      primary_btn_text: "포토갤러리",
+      primary_btn_link: "/gallery/photos",
+      secondary_btn_text: "자료실 바로가기",
+      secondary_btn_link: "/resources/forms",
+    }
+  ];
+
   const [current, setCurrent] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -73,20 +53,47 @@ export default function HeroSlider() {
       {/* Background images */}
       {SLIDES.map((s, i) => (
         <div
-          key={i}
+          key={s.id}
           className={`${styles.bgSlide} ${i === current ? styles.bgActive : ""}`}
         >
-          <Image
-            src={s.image}
-            alt={s.imageAlt}
-            fill
-            priority={i === 0}
-            sizes="100vw"
-            quality={100}
-            unoptimized={true}
-            className={styles.bgImage}
-            style={{ objectPosition: s.objectPosition }}
-          />
+          {s.mobile_image ? (
+            <>
+              <Image
+                src={s.desktop_image}
+                alt="히어로 배경"
+                fill
+                priority={i === 0}
+                sizes="100vw"
+                quality={100}
+                unoptimized={true}
+                className={`${styles.bgImage} ${styles.desktopOnly}`}
+                style={{ objectPosition: s.object_position }}
+              />
+              <Image
+                src={s.mobile_image}
+                alt="히어로 배경"
+                fill
+                priority={i === 0}
+                sizes="100vw"
+                quality={100}
+                unoptimized={true}
+                className={`${styles.bgImage} ${styles.mobileOnly}`}
+                style={{ objectPosition: s.object_position }}
+              />
+            </>
+          ) : (
+            <Image
+              src={s.desktop_image}
+              alt="히어로 배경"
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              quality={100}
+              unoptimized={true}
+              className={styles.bgImage}
+              style={{ objectPosition: s.object_position }}
+            />
+          )}
         </div>
       ))}
 
@@ -95,20 +102,24 @@ export default function HeroSlider() {
 
       {/* Content */}
       <div className={`${styles.heroContent} is-revealed`} key={`c-${current}`}>
-        <span className={`${styles.heroLabel} reveal-up reveal-stagger-1`}>{slide.subtitle}</span>
-        <h1 className="reveal-up reveal-stagger-2">
-          {slide.title}
-        </h1>
-        <p className="reveal-fade reveal-stagger-3">
-          {slide.desc}
-        </p>
+        {slide.subtitle && <span className={`${styles.heroLabel} reveal-up reveal-stagger-1`}>{slide.subtitle}</span>}
+        <h1 className="reveal-up reveal-stagger-2" dangerouslySetInnerHTML={{ __html: slide.title }} />
+        {slide.description && (
+          <p className="reveal-fade reveal-stagger-3">
+            {slide.description}
+          </p>
+        )}
         <div className={`${styles.heroActions} reveal-fade reveal-stagger-4`}>
-          <Link href={slide.cta.href} className={styles.heroPrimaryButton}>
-            {slide.cta.label}
-          </Link>
-          <Link href="/resources/forms" className={styles.heroSecondaryButton}>
-            자료실 바로가기
-          </Link>
+          {slide.primary_btn_text && slide.primary_btn_link && (
+            <Link href={slide.primary_btn_link} className={styles.heroPrimaryButton}>
+              {slide.primary_btn_text}
+            </Link>
+          )}
+          {slide.secondary_btn_text && slide.secondary_btn_link && (
+            <Link href={slide.secondary_btn_link} className={styles.heroSecondaryButton}>
+              {slide.secondary_btn_text}
+            </Link>
+          )}
         </div>
       </div>
 

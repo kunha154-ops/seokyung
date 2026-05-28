@@ -232,3 +232,19 @@
     flex-wrap: wrap;
   }
 }
+
+.desktopOnly {
+  display: block;
+}
+.mobileOnly {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .desktopOnly {
+    display: none !important;
+  }
+  .mobileOnly {
+    display: block !important;
+  }
+}
