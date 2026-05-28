@@ -62,7 +62,7 @@ export default function OfficersPage() {
 
               <div className={styles.imageWrapper}>
                 <Image 
-                  src={`/images/officers/${officer.name.split(" ")[0]}.png?v=4`} 
+                  src={`/images/officers/${officer.name.split(" ")[0]}.png?v=5`} 
                   alt={officer.name}
                   fill
                   sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 300px"
