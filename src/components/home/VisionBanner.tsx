@@ -7,8 +7,8 @@ export default function VisionBanner() {
   return (
     <ScrollRevealWrapper as="section" className={styles.section} threshold={0.3} ariaLabel="비전">
       <Image
-        src="/uploads/gallery/photos/1779375274238-f14c5847-c0d3-4ffc-8216-fc5a2681ec9e.jpg"
-        alt="서경노회 성도들의 기도 및 비전 현장"
+        src="/images/prayer.jpg"
+        alt=""
         fill
         sizes="100vw"
         className={styles.bgImage}
