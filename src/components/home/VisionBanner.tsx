@@ -7,7 +7,7 @@ export default function VisionBanner() {
   return (
     <ScrollRevealWrapper as="section" className={styles.section} threshold={0.3} ariaLabel="비전">
       <Image
-        src="/images/officers-group.jpg"
+        src="/images/vision-group.jpg"
         alt=""
         fill
         sizes="100vw"
