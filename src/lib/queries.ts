@@ -416,3 +416,137 @@ export function deleteGalleryMedia(id: number): boolean {
   const result = db.prepare('DELETE FROM gallery_media WHERE id = ?').run(id);
   return result.changes > 0;
 }
+
+// === Committee Posts ===
+export interface CommitteePost {
+  id: number;
+  committee_type: string;
+  board_type: string;
+  title: string;
+  content: string;
+  thumbnail_url: string | null;
+  thumbnail_path: string | null;
+  status: string;
+  views: number;
+  author_id: number | null;
+  author_name?: string | null;
+  created_at: string;
+  updated_at: string;
+  attachment_count?: number;
+  attachments?: Attachment[];
+}
+
+export function getCommitteePosts(committeeType: string, boardType?: string, page = 1, pageSize = 10, search = '', includeHidden = false): { posts: CommitteePost[]; total: number; totalPages: number } {
+  const db = getDb();
+  let whereClause = "WHERE cp.committee_type = ?";
+  const params: (string | number)[] = [committeeType];
+
+  if (boardType) {
+    whereClause += " AND cp.board_type = ?";
+    params.push(boardType);
+  }
+
+  if (!includeHidden) {
+    whereClause += " AND cp.status = 'public'";
+  }
+
+  if (search) {
+    whereClause += " AND (cp.title LIKE ? OR cp.content LIKE ?)";
+    params.push(`%${search}%`, `%${search}%`);
+  }
+
+  const countRow = db.prepare(`SELECT COUNT(*) as total FROM committee_posts cp ${whereClause}`).get(...params) as { total: number };
+  const total = countRow.total;
+  const totalPages = Math.ceil(total / pageSize);
+  const offset = (page - 1) * pageSize;
+
+  const posts = db.prepare(`
+    SELECT cp.*, u.name as author_name,
+           (SELECT COUNT(*) FROM post_attachments pa WHERE pa.table_name = 'committee_posts' AND pa.post_id = cp.id) as attachment_count
+    FROM committee_posts cp
+    LEFT JOIN users u ON cp.author_id = u.id
+    ${whereClause} 
+    ORDER BY cp.created_at DESC 
+    LIMIT ? OFFSET ?
+  `).all(...params, pageSize, offset) as CommitteePost[];
+
+  return { posts, total, totalPages };
+}
+
+export function getCommitteePostById(id: number, includeHidden = false): CommitteePost | null {
+  const db = getDb();
+  const whereClause = includeHidden ? "WHERE cp.id = ?" : "WHERE cp.id = ? AND cp.status = 'public'";
+  
+  const post = db.prepare(`
+    SELECT cp.*, u.name as author_name 
+    FROM committee_posts cp 
+    LEFT JOIN users u ON cp.author_id = u.id 
+    ${whereClause}
+  `).get(id) as CommitteePost | undefined;
+
+  if (!post) return null;
+
+  post.attachments = getAttachments('committee_posts', id);
+  post.attachment_count = post.attachments.length;
+
+  return post;
+}
+
+export function incrementCommitteePostViews(id: number): void {
+  const db = getDb();
+  db.prepare('UPDATE committee_posts SET views = views + 1 WHERE id = ?').run(id);
+}
+
+export function createCommitteePost(
+  committeeType: string,
+  boardType: string,
+  title: string,
+  content: string,
+  status: string = 'public',
+  authorId: number | null = null,
+  thumbnailUrl: string | null = null,
+  thumbnailPath: string | null = null
+): CommitteePost {
+  const db = getDb();
+  const result = db.prepare(`
+    INSERT INTO committee_posts (committee_type, board_type, title, content, status, author_id, thumbnail_url, thumbnail_path)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(committeeType, boardType, title, content, status, authorId, thumbnailUrl, thumbnailPath);
+  
+  return db.prepare('SELECT * FROM committee_posts WHERE id = ?').get(result.lastInsertRowid) as CommitteePost;
+}
+
+export function updateCommitteePost(
+  id: number,
+  title: string,
+  content: string,
+  status: string,
+  thumbnailUrl?: string | null,
+  thumbnailPath?: string | null
+): CommitteePost | undefined {
+  const db = getDb();
+  
+  if (thumbnailUrl !== undefined && thumbnailPath !== undefined) {
+    db.prepare(`
+      UPDATE committee_posts 
+      SET title = ?, content = ?, status = ?, thumbnail_url = ?, thumbnail_path = ?, updated_at = datetime('now', 'localtime') 
+      WHERE id = ?
+    `).run(title, content, status, thumbnailUrl, thumbnailPath, id);
+  } else {
+    db.prepare(`
+      UPDATE committee_posts 
+      SET title = ?, content = ?, status = ?, updated_at = datetime('now', 'localtime') 
+      WHERE id = ?
+    `).run(title, content, status, id);
+  }
+  
+  return db.prepare('SELECT * FROM committee_posts WHERE id = ?').get(id) as CommitteePost | undefined;
+}
+
+export function deleteCommitteePost(id: number): boolean {
+  const db = getDb();
+  const result = db.prepare('DELETE FROM committee_posts WHERE id = ?').run(id);
+  // Optional: delete attachments metadata, but physical files remain unless handled by API
+  db.prepare("DELETE FROM post_attachments WHERE table_name = 'committee_posts' AND post_id = ?").run(id);
+  return result.changes > 0;
+}

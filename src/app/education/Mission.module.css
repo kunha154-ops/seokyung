@@ -1,0 +1,164 @@
+.container {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  justify-content: space-between;
+}
+
+.writeBtn {
+  padding: 0.65rem 1.25rem;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.metaInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: 0.75rem;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  padding: 0.75rem;
+  border-bottom: 2px solid var(--color-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.table td {
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--color-text-muted);
+}
+
+.titleLink {
+  color: var(--color-text);
+  font-weight: 500;
+  font-size: 0.95rem;
+  display: block;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.pageBtn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageBtnActive {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .tableWrapper {
+    border: none;
+  }
+  
+  .table, .table tbody, .table tr {
+    display: block;
+    width: 100%;
+  }
+  
+  .table thead {
+    display: none;
+  }
+  
+  .table tr {
+    margin-bottom: 1rem;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .table td {
+    display: flex;
+    padding: 0;
+    border-bottom: none;
+    font-size: 0.95rem;
+  }
+  
+  /* .noCell, .authorCell, .dateCell, .attachCell, .titleCell */
+  .noCell {
+    display: none;
+  }
+  
+  .titleCell {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .titleLink {
+    font-size: 1.15rem;
+  }
+
+  .authorCell, .dateCell {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .authorCell::before { content: "게시자: "; font-weight: 500; }
+  .dateCell::before { content: "게시일: "; font-weight: 500; }
+
+  .attachCell {
+    margin-top: 0.5rem;
+    border-top: 1px dashed var(--color-border-light);
+    padding-top: 0.75rem !important;
+  }
+  
+  .attachCell::before {
+    content: "첨부파일이 있습니다";
+    font-size: 0.85rem;
+    color: var(--color-primary);
+  }
+}

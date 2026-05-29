@@ -133,7 +133,7 @@
 .navLink {
   display: flex;
   align-items: center;
-  padding: var(--sp-3) var(--sp-6);
+  padding: var(--sp-3) var(--sp-3);
   font-size: var(--fs-base);
   font-weight: var(--fw-semibold);
   color: var(--color-text);
@@ -263,7 +263,7 @@
 
 .mobileSubLink:hover { color: var(--color-primary); }
 
-@media (max-width: 899px) {
+@media (max-width: 1100px) {
   .nav { display: none; }
   .topBar { display: none; }
   .hamburger { display: flex; }

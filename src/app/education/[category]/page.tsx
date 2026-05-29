@@ -16,7 +16,7 @@ export const CATEGORIES = [
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
   const p = await params;
   const category = CATEGORIES.find(c => c.id === p.category) || CATEGORIES[0];
-  return { title: `선교위원회 - ${category.label}` };
+  return { title: `교육위원회 - ${category.label}` };
 }
 
 interface PageProps {
@@ -24,7 +24,7 @@ interface PageProps {
   searchParams: Promise<{ page?: string; search?: string }>;
 }
 
-export default async function MissionCategoryPage({ params, searchParams }: PageProps) {
+export default async function EducationCategoryPage({ params, searchParams }: PageProps) {
   const user = await getCurrentUser();
   const isAdmin = user?.isAdmin || false;
   const canWrite = isAdmin || user?.status === 'approved';
@@ -38,7 +38,7 @@ export default async function MissionCategoryPage({ params, searchParams }: Page
   const search = sp.search || '';
 
   const { posts, total, totalPages } = getCommitteePosts(
-    'mission', 
+    'education', 
     categoryId, 
     page, 
     10, 
@@ -46,23 +46,23 @@ export default async function MissionCategoryPage({ params, searchParams }: Page
     isAdmin // Admins can see hidden posts
   );
 
-  const MISSION_MENU = CATEGORIES.map(c => ({
+  const MENU = CATEGORIES.map(c => ({
     label: c.label,
-    href: `/mission/${c.id}`,
+    href: `/education/${c.id}`,
     active: c.id === categoryId,
   }));
 
   return (
     <SubPageLayout
-      title="선교위원회"
+      title="교육위원회"
       breadcrumbs={[
-        { label: "선교위원회", href: "/mission" },
+        { label: "교육위원회", href: "/education" },
         { label: currentCategory.label },
       ]}
-      sideMenu={MISSION_MENU}
+      sideMenu={MENU}
     >
       <CommitteeList
-        committeeType="mission"
+        committeeType="education"
         boardType={categoryId}
         posts={posts}
         total={total}
@@ -70,7 +70,7 @@ export default async function MissionCategoryPage({ params, searchParams }: Page
         totalPages={totalPages}
         search={search}
         canWrite={canWrite}
-        basePath="/mission"
+        basePath="/education"
       />
     </SubPageLayout>
   );

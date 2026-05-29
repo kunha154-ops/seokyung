@@ -147,6 +147,21 @@ function initializeSchema(db: Database.Database) {
       created_at TEXT DEFAULT (datetime('now', 'localtime')),
       updated_at TEXT DEFAULT (datetime('now', 'localtime'))
     );
+
+    CREATE TABLE IF NOT EXISTS committee_posts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      committee_type TEXT NOT NULL,
+      board_type TEXT NOT NULL,
+      title TEXT NOT NULL,
+      content TEXT NOT NULL,
+      thumbnail_url TEXT,
+      thumbnail_path TEXT,
+      status TEXT DEFAULT 'public',
+      views INTEGER DEFAULT 0,
+      author_id INTEGER REFERENCES users(id),
+      created_at TEXT DEFAULT (datetime('now', 'localtime')),
+      updated_at TEXT DEFAULT (datetime('now', 'localtime'))
+    );
   `);
 
   // Migration for existing databases
@@ -159,6 +174,28 @@ function initializeSchema(db: Database.Database) {
     db.prepare("UPDATE users SET status = 'approved'").run();
   } catch (e) {
     // Columns already exist
+  }
+
+  // Ensure committee_posts table exists for existing databases
+  try {
+    db.prepare("SELECT 1 FROM committee_posts LIMIT 1").get();
+  } catch (e) {
+    db.exec(`
+      CREATE TABLE committee_posts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        committee_type TEXT NOT NULL,
+        board_type TEXT NOT NULL,
+        title TEXT NOT NULL,
+        content TEXT NOT NULL,
+        thumbnail_url TEXT,
+        thumbnail_path TEXT,
+        status TEXT DEFAULT 'public',
+        views INTEGER DEFAULT 0,
+        author_id INTEGER REFERENCES users(id),
+        created_at TEXT DEFAULT (datetime('now', 'localtime')),
+        updated_at TEXT DEFAULT (datetime('now', 'localtime'))
+      );
+    `);
   }
 
   // Ensure hero_slides table exists for existing databases

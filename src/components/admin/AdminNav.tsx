@@ -13,6 +13,7 @@ const ADMIN_MENUS = [
   { label: '포토 갤러리', href: '/admin/gallery' },
   { label: '영상 갤러리', href: '/admin/videos' },
   { label: '자료실', href: '/admin/resources' },
+  { label: '위원회게시판', href: '/admin/committee' },
 ];
 
 export default function AdminNav() {
