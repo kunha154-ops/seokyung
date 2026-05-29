@@ -74,7 +74,6 @@ const NAV_ITEMS = [
     label: "자립위원회",
     href: "/self-reliance",
     sub: [
-      { label: "선교사동향", href: "/self-reliance/trends" },
       { label: "재정보고", href: "/self-reliance/finance" },
       { label: "공지사항", href: "/self-reliance/notices" },
       { label: "특별후원금", href: "/self-reliance/donations" },
@@ -85,7 +84,6 @@ const NAV_ITEMS = [
     label: "교육위원회",
     href: "/education",
     sub: [
-      { label: "선교사동향", href: "/education/trends" },
       { label: "재정보고", href: "/education/finance" },
       { label: "공지사항", href: "/education/notices" },
       { label: "특별후원금", href: "/education/donations" },

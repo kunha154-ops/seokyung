@@ -6,7 +6,6 @@ import SubPageLayout from "@/components/SubPageLayout";
 export const dynamic = 'force-dynamic';
 
 export const CATEGORIES = [
-  { id: "trends", label: "선교사동향" },
   { id: "finance", label: "재정보고" },
   { id: "notices", label: "공지사항" },
   { id: "donations", label: "특별후원금" },
