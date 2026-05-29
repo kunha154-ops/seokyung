@@ -114,4 +114,7 @@
     transform: translateX(-50%);
   }
   .section { padding: var(--sp-24) 0; }
+  .bgImage {
+    object-position: center 25%;
+  }
 }
