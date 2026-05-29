@@ -19,13 +19,13 @@ const NAV_ITEMS = [
   },
   {
     label: "조직",
-    href: "/organization/officers",
+    href: "/organization/executives",
     sub: [
-      { label: "임원진", href: "/organization/officers" },
+      { label: "임원진", href: "/organization/executives" },
       { label: "상비부", href: "/organization/departments" },
-      { label: "상설위원회", href: "/organization/committees" },
+      { label: "상설위원회", href: "/organization/standing-committees" },
       { label: "시찰회", href: "/organization/districts" },
-      { label: "조직도", href: "/about/organization" },
+      { label: "조직도", href: "/organization/chart" },
     ],
   },
   {

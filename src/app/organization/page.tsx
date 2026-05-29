@@ -1,2 +1,2 @@
 import { redirect } from "next/navigation";
-export default function OrganizationPage() { redirect("/organization/officers"); }
+export default function OrganizationPage() { redirect("/organization/executives"); }
